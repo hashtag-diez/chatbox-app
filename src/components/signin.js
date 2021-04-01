@@ -1,20 +1,35 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
+import { Redirect } from 'react-router-dom'
 
-const signin = () => {
+const Signin = () => {
+  const [pseudo, setPseudo] = useState('')
+  const [clicked, setClick] = useState(false)
+
+  const handleChange = (e) => setPseudo(e.target.value)
+  const handleClick = (e) => {
+    e.preventDefault()
+    setClick(true)
+  }
+  if (clicked) {
+    return <Redirect push to={'/pseudo/' + pseudo} />
+  }
   return (
     <SigninBox>
       <SigninForm>
         <SigninInput
+          value={pseudo}
           placeholder='Pseudo'
           type='text'
+          onChange={handleChange}
           required
         />
-        <SigninButton type='submit'>GO</SigninButton>
+        <SigninButton type='submit' onClick={handleClick}>GO</SigninButton>
       </SigninForm>
     </SigninBox>
   )
 }
+
 const SigninBox = styled.div`
   display: grid;
   background-color: #ecf0f1;
@@ -42,4 +57,4 @@ const SigninButton = styled.button`
   outline : none;
 
 `
-export default signin
+export default Signin
