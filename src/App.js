@@ -2,7 +2,7 @@ import { AppBox } from './style/Globalstyle'
 import Chatinput from './components/Chatinput'
 import MsgBox from './components/MsgBox'
 import Message from './components/Message'
-import React, { Component } from 'react'
+import React, { Component, createRef } from 'react'
 import base from './base'
 
 class App extends Component {
@@ -16,7 +16,6 @@ class App extends Component {
       state: 'msgList'
     })
   }
-
 
   handleSubmit = (e, value) => {
     const contenu = (e ? e.target.elements[0].value : value)
@@ -45,12 +44,14 @@ class App extends Component {
     }
   }
   render(){
+    const me = this.props.match.params.pseudo
     const list= Object.keys(this.state.msgList)
     .map(message => (
       <React.Fragment key={message}>
         <Message
           author={this.state.msgList[message].author}
           content={this.state.msgList[message].content}
+          isFromMe={(this.state.msgList[message].author===me ? true : false)}
         />
       </React.Fragment>
     ))

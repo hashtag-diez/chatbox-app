@@ -1,8 +1,8 @@
 import styled from 'styled-components'
 
-const mainColor = '#ecf0f1'
+const mainColor = 'white'
 const subColor = '#3498db'
-const textareaColor = '#bdc3c7'
+const textareaColor = '#ecf0f1'
 export const AppBox = styled.div`
   display: flex;
   flex-direction : column;
@@ -10,7 +10,7 @@ export const AppBox = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 100%;
+  height: inherit;
 `
 export const AppMsg = styled.section`
   display : flex;
@@ -22,6 +22,7 @@ export const AppForm = styled.form`
   display: flex;
   flex-direction: column;
   width : min(85%,650px);
+  font-size: 16px;
 `
 export const AppInput = styled.input` 
   border-style : none;
@@ -37,6 +38,9 @@ export const AppButton = styled.button`
   background-color : ${subColor};
   border-style : none;
   outline : none;
+  font-weight : bold;
+  font-size: 16px;
+  border-radius : 10px;
 `
 export const AppTextarea = styled.textarea`
   outline : none;
@@ -47,23 +51,30 @@ export const AppTextarea = styled.textarea`
   resize : none;
   overflow-x : hidden;
   overflow-y : visible;
+  font-size: 16px;
+  padding : 5px;
+  border-radius : 5px;
 `
 export const MsgBox = styled.div`
-  color : white; 
-  background-color: ${subColor};
+  display: inline;
+  color : ${(props) => (props.isFromMe ? 'white' : 'black')};
+  background-color: ${(props) => (props.isFromMe ? subColor : '#bdc3c7')};
   position : relative;
   border-radius : 5px;
-  padding : 1em;
+  padding : 0.5em;
   margin : 10px 0px;
-  align-self : flex-end;
+  align-self : ${(props) => (props.isFromMe ? 'flex-end' : 'flex-start')};
+  width: min(inherit, auto);
+  font-size: 16px;
 `
 export const MsgBoxTail = styled.div`
   position : absolute;
   display : inline-block;
   top : 95%;
-  right : 5%;
+  right : ${(props) => (props.isFromMe ? 'calc(0% + 10px)' : 'calc(100%-10px)')}; 
   height : 0;
   width : 0;
-  border-top : 15px solid ${subColor};
-  border-left : 20px solid transparent; 
+  border-top : 15px solid ${(props) => (props.isFromMe ? subColor : '#bdc3c7')};
+  border-left : ${(props) => (props.isFromMe ? '20px solid transparent' : '')};
+  border-right : ${(props) => (props.isFromMe ? '' : '20px solid transparent')};
 `
