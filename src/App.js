@@ -2,62 +2,68 @@ import { AppBox } from './style/Globalstyle'
 import Chatinput from './components/Chatinput'
 import MsgBox from './components/MsgBox'
 import Message from './components/Message'
-import React, { useState } from 'react'
+import React, { Component } from 'react'
+import base from './base'
 
-const App = () => {
-  const [nbMsg, setNbMsg] = useState(2)
-  const [msgList, setMsgList] = useState({
-    1: {
-      content: 'Coucou'
-    },
-    2: {
-      content: 'BAW CA FLINGUE !'
+class App extends Component {
+  state = {
+    msgList: { 
     }
-  })
-  const list = Object.keys(msgList)
-    .map(message => (
-      <React.Fragment key={message}>
-        <Message
-          author={window.location.href.slice(29)}
-          content={msgList[message].content}
-        />
-      </React.Fragment>
-    ))
-  const handleSubmit = (e, value) => {
+  }
+  componentDidMount () {
+    base.syncState('/messages', {
+      context: this,
+      state: 'msgList'
+    })
+  }
+
+
+  handleSubmit = (e, value) => {
     const contenu = (e ? e.target.elements[0].value : value)
     if (e) e.preventDefault()
 
-    if (nbMsg + 1 === 11) {
-      const newMsgList = { ...msgList }
+    if (Object.keys(this.state.msgList).length + 1 === 11) {
+      const newMsgList = { ...this.state.msgList }
       delete newMsgList[1]
-      console.log(Object.keys(newMsgList))
       Object.keys(newMsgList).forEach(key => {
         newMsgList[parseInt(key, 10) - 1] = newMsgList[parseInt(key)]
       })
       delete newMsgList[10]
-      setMsgList(Object.assign(newMsgList, {
+      this.setState({ msgList: Object.assign(newMsgList, {
         10: {
+          author: this.props.match.params.pseudo,
           content: contenu
         }
-      }))
+      })})
     } else {
-      setNbMsg(nbMsg + 1)
-      setMsgList(Object.assign(msgList, {
-        [nbMsg + 1]: {
+      this.setState({ msgList: Object.assign(this.state.msgList, {
+        [Object.keys(this.state.msgList).length + 1]: {
+          author: this.props.match.params.pseudo,
           content: contenu
         }
-      }))
+      })})
     }
   }
-  return (
-    <AppBox>
-      <h2>Messages</h2>
-      <MsgBox list={list} />
-      <Chatinput
-        updateMsg={(e, value) => handleSubmit(e, value)}
-      />
-    </AppBox>
-  )
+  render(){
+    const list= Object.keys(this.state.msgList)
+    .map(message => (
+      <React.Fragment key={message}>
+        <Message
+          author={this.state.msgList[message].author}
+          content={this.state.msgList[message].content}
+        />
+      </React.Fragment>
+    ))
+    return (
+      <AppBox>
+        <h2>Messages</h2>
+        <MsgBox list={list} />
+        <Chatinput
+          updateMsg={(e, value) => this.handleSubmit(e, value)}
+        />
+      </AppBox>
+    )
+  }
 }
 
 export default App
