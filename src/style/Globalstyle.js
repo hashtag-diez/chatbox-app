@@ -12,10 +12,16 @@ export const AppBox = styled.div`
   width: 100%;
   height: 100%;
 `
+export const AppMsg = styled.section`
+  display : flex;
+  flex-direction : column;
+  width : min(85%,650px);
+  padding-bottom : 10px;
+`
 export const AppForm = styled.form`
   display: flex;
   flex-direction: column;
-  width : 85%;
+  width : min(85%,650px);
 `
 export const AppInput = styled.input` 
   border-style : none;
@@ -32,7 +38,7 @@ export const AppButton = styled.button`
   border-style : none;
   outline : none;
 `
-export const AppTextarea = styled.span`
+export const AppTextarea = styled.textarea`
   outline : none;
   border-style : none;
   border-bottom : 3px solid ${subColor};
@@ -48,7 +54,7 @@ export const MsgBox = styled.div`
   position : relative;
   border-radius : 5px;
   padding : 1em;
-  margin : 20px;
+  margin : 10px 0px;
   align-self : flex-end;
 `
 export const MsgBoxTail = styled.div`
