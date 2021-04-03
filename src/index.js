@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import './index.css'
 import App from './App'
 import Signin from './components/Signin'
-import NotFound from './components/notfound'
+import NotFound from './components/Notfound'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 
 const Root = () => (
