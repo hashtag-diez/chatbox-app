@@ -1,14 +1,13 @@
 import React from 'react'
 import { MsgBox, MsgBoxTail } from '../style/Globalstyle'
 
-const Message = () => {
+const Message = ({ author, content }) => {
   return (
     <MsgBox>
-      Mon message
+      <b>{author}</b> : {content}
       <MsgBoxTail />
     </MsgBox>
   )
 }
-
 
 export default Message
