@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 import './index.css'
 import App from './App'
@@ -6,15 +6,21 @@ import Signin from './components/Signin'
 import NotFound from './components/Notfound'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 
-const Root = () => (
-  <BrowserRouter>
-    <Switch>
-      <Route exact path='/' component={Signin} />
-      <Route path='/pseudo/:pseudo' component={App} />
-      <Route component={NotFound} />
-    </Switch>
-  </BrowserRouter>
-)
+const Root = () => {
+  const [pseudo, setPseudo] = useState('')
+  const [icon, setIcon] = useState('')
+  const handleChange = (e) => setPseudo(e.target.value)
+  const handleIcon = (link) => setIcon(link)
+  return (
+    <BrowserRouter>
+      <Switch>
+        <Route exact path='/' render={() => <Signin handlePseudo={(e) => handleChange(e)} handleIcon={(link) => handleIcon(link)} pseudo={pseudo} />} />
+        <Route path='/app' render={() => <App pseudo={pseudo} icon={icon} />} />
+        <Route component={NotFound} />
+      </Switch>
+    </BrowserRouter>
+  )
+}
 
 ReactDOM.render(
   <Root />,

@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { TransitionGroup } from 'react-transition-group'
 
 const mainColor = 'white'
 const subColor = '#3498db'
@@ -12,7 +13,7 @@ export const AppBox = styled.div`
   width: 100%;
   height: inherit;
 `
-export const AppMsg = styled.section`
+export const AppMsg = styled(TransitionGroup)`
   display : flex;
   flex-direction : column;
   width : min(85%,650px);
@@ -70,7 +71,7 @@ export const MsgBox = styled.div`
 export const MsgBoxTail = styled.div`
   position : absolute;
   display : inline-block;
-  top : 95%;
+  top : calc(100% - 8px);
   right : ${(props) => (props.isFromMe ? 'calc(0% + 10px)' : 'calc(100%-10px)')}; 
   height : 0;
   width : 0;
